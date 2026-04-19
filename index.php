@@ -186,7 +186,7 @@ if ($resultado) {
             <?php endif; ?>
 
             <!-- O formulário envia os dados para esta mesma página (site.php) via POST -->
-            <form method="POST" action="site.php">
+            <form method="POST" action="index.php">
 
                 <input type="text" name="nome" placeholder="O teu nome" required>
 
