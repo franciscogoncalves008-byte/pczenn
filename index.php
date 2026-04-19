@@ -9,7 +9,7 @@ function estrelas($n) {
 }
 
 // Variáveis que controlam se o formulário foi enviado com sucesso ou com erro
-$avaliacao_enviada = false;
+$avaliacao_enviada = isset($_GET['sucesso']);
 $avaliacao_erro    = false;
 
 // Verifica se o formulário foi submetido (método POST)
@@ -31,14 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param('sis', $nome, $classificacao, $texto);
 
         // Executa a instrução e guarda se correu bem ou não
-        $avaliacao_enviada = $stmt->execute();
-        if (!$avaliacao_enviada) $avaliacao_erro = true;
-
-    } else {
-        // Campos em falta ou classificação inválida
-        $avaliacao_erro = true;
-    }
+       if ($stmt->execute()) {
+    header('Location: index.php?sucesso=1');
+    exit;
+} else {
+    $avaliacao_erro = true;
 }
+
 
 // Carrega todas as avaliações da base de dados, da mais recente para a mais antiga
 $avaliacoes = [];
