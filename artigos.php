@@ -63,7 +63,7 @@ $nomes_categorias = [
     <!-- Menu de navegação -->
     <nav id="menu">
         <ul class="menu-lista">
-            <li class="menu-item"><a href="site.php"><i class="fa fa-home"></i>Início</a></li>
+            <li class="menu-item"><a href="index.php"><i class="fa fa-home"></i>Início</a></li>
             <li class="menu-item"><a href="manutencao.php"><i class="fa fa-wrench"></i>Manutenção</a></li>
             <li class="menu-item"><a href="otimizacao.php"><i class="fa fa-desktop"></i>Otimização</a></li>
             <li class="menu-item"><a href="artigos.php"><i class="fa fa-newspaper"></i>Artigos</a></li>
