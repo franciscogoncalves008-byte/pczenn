@@ -1,17 +1,15 @@
 <?php
-/*
- * db.php — Ligação à base de dados
- *
- * Este ficheiro é incluído em todas as páginas PHP que precisam
- * de aceder à base de dados MySQL.
- * Basta escrever:  require 'db.php';
- * e a variável $conn fica disponível para fazer consultas.
- */
+$servidor = getenv('DB_HOST') ?: 'localhost';
+$utilizador = getenv('DB_USER') ?: 'root';
+$password   = getenv('DB_PASS') ?: '';
+$base_dados = getenv('DB_NAME') ?: 'pczen';
+$porta      = (int)(getenv('DB_PORT') ?: 3306);
 
-// Cria a ligação ao MySQL com os dados do servidor
-// new mysqli(servidor, utilizador, password, nome_da_base_de_dados, porta)
-$conn = new mysqli('localhost', 'root', '', 'pczen', 3306);
+$conn = new mysqli($servidor, $utilizador, $password, $base_dados, $porta);
 
-// Define o conjunto de caracteres para suportar acentos e caracteres especiais
+if ($conn->connect_error) {
+    die('Erro de ligação à base de dados: ' . $conn->connect_error);
+}
+
 $conn->set_charset('utf8mb4');
 ?>
