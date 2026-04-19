@@ -1,5 +1,5 @@
 <?php
-// Inclui o ficheiro de ligação à base de dados vou tirar e meter nas notas
+// Inclui o ficheiro de ligação à base de dados
 require 'db.php';
 
 // Função auxiliar que converte um número (1 a 5) em estrelas
@@ -8,7 +8,7 @@ function estrelas($n) {
     return str_repeat('★', $n) . str_repeat('☆', 5 - $n);
 }
 
-// Variáveis que controlam se o formulário foi enviado com sucesso ou com erro
+// Verifica se o formulário foi enviado com sucesso (redireccionado com ?sucesso=1)
 $avaliacao_enviada = isset($_GET['sucesso']);
 $avaliacao_erro    = false;
 
@@ -30,14 +30,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Liga os valores reais aos marcadores: s=texto, i=número inteiro
         $stmt->bind_param('sis', $nome, $classificacao, $texto);
 
-        // Executa a instrução e guarda se correu bem ou não
-       if ($stmt->execute()) {
-    header('Location: index.php?sucesso=1');
-    exit;
-} else {
-    $avaliacao_erro = true;
-}
+        // Executa a instrução — se correr bem redireciona para evitar duplicados ao fazer refresh
+        if ($stmt->execute()) {
+            header('Location: index.php?sucesso=1');
+            exit;
+        } else {
+            // Se falhar, mostra mensagem de erro
+            $avaliacao_erro = true;
+        }
 
+    } else {
+        // Campos em falta ou classificação inválida
+        $avaliacao_erro = true;
+    }
+}
 
 // Carrega todas as avaliações da base de dados, da mais recente para a mais antiga
 $avaliacoes = [];
